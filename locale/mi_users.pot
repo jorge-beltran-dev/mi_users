@@ -1,0 +1,129 @@
+# LANGUAGE translation of Mi Users Application
+# Copyright 2009 Your Name <you@example.com>
+# --VERSIONS--
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: mi_users-unknown\n"
+"POT-Creation-Date: 2009-11-09 15:46+0100\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: Your Name <you@example.com>\n"
+"Language-Team:\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../../\n"
+
+#: models/behaviors/user_account.php:254
+msgid "Your password has been changed"
+msgstr ""
+
+#: models/behaviors/user_account.php:256;550
+msgid ". Your new password is <strong>%1$s</strong>"
+msgstr ""
+
+#: models/behaviors/user_account.php:261
+msgid "There was a problem changing your password"
+msgstr ""
+
+#: models/behaviors/user_account.php:311;320;330
+msgid "token not found"
+msgstr ""
+
+#: models/behaviors/user_account.php:313;423
+msgid "email not found"
+msgstr ""
+
+#: models/behaviors/user_account.php:322
+msgid "%1$s does not match for email %2$s"
+msgstr ""
+
+#: models/behaviors/user_account.php:332
+msgid "token does not match"
+msgstr ""
+
+#: models/behaviors/user_account.php:342
+msgid "email token expired"
+msgstr ""
+
+#: models/behaviors/user_account.php:345
+msgid "confirm email token expired"
+msgstr ""
+
+#: models/behaviors/user_account.php:356
+msgid "Thank you for confirming your account"
+msgstr ""
+
+#: models/behaviors/user_account.php:415;421
+msgid "password change email sent"
+msgstr ""
+
+#: models/behaviors/user_account.php:418
+msgid "problem sending email"
+msgstr ""
+
+#: models/behaviors/user_account.php:508
+msgid "Welcome %1$s!"
+msgstr ""
+
+#: models/behaviors/user_account.php:510
+msgid ". Your password is <strong>%1$s</strong>"
+msgstr ""
+
+#: models/behaviors/user_account.php:515
+msgid "errors in form"
+msgstr ""
+
+#: models/behaviors/user_account.php:539
+msgid "please enter your new password"
+msgstr ""
+
+#: models/behaviors/user_account.php:548
+msgid "Your password has been changed. Please login"
+msgstr ""
+
+#: views/elements/users/login_or_register.ctp:7
+msgid "New User"
+msgstr ""
+
+#: views/elements/users/login_or_register.ctp:8
+msgid "I've already got an account"
+msgstr ""
+
+#: views/elements/users/login_or_register.ctp:9
+msgid "Username or email"
+msgstr ""
+
+#: views/elements/users/login_or_register.ctp:10
+msgid "Email"
+msgstr ""
+
+#: views/elements/users/login_or_register.ctp:11
+msgid "Choose your username"
+msgstr ""
+
+#: views/elements/users/login_or_register.ctp:12
+msgid "password"
+msgstr ""
+
+#: views/elements/users/login_or_register.ctp:13
+msgid "confirm"
+msgstr ""
+
+#: views/elements/users/login_or_register.ctp:14
+msgid "Login to continue"
+msgstr ""
+
+#: views/elements/users/login_or_register.ctp:15
+msgid "Register to continue"
+msgstr ""
+
+#: views/elements/users/login_or_register.ctp:38
+msgid "I agree to the site %1$s"
+msgstr ""
+
+#: views/elements/users/login_or_register.ctp:38
+msgid "terms of service"
+msgstr ""
+
