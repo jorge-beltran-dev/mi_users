@@ -107,7 +107,7 @@ class RememberMeComponent extends Object {
 		$this->_setupAuth();
 		$url = Router::normalize($C->params['url']['url']);
 		if ($url === Router::normalize($this->settings['auth']['logoutAction'])) {
-			$this->Controller->Auth->logout();
+			//$this->Controller->Auth->logout();
 			$this->_cookieDestroy();
 			$this->log('Disabling - logging out');
 			$this->enabled = false;
@@ -290,6 +290,10 @@ class RememberMeComponent extends Object {
 		$components = array_flip(array_keys($C->components));
 		if (isset($components['Auth']) && $components['Auth'] > $components['MiUsers.RememberMe']) {
 			return true;
+		}
+		if (in_array('Auth', $components)) {
+			//trigger_error('RememberMeComponent: How did we get this far');
+			return true; // assumed. shouldn't be possible to get here
 		}
 		if ($C->name !== 'CakeError') {
 			trigger_error('RememberMeComponent: The RememberMe component must be included before the Auth component to operate correctly');
