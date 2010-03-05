@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * User Account behavior
  *
@@ -400,7 +398,7 @@ class UserAccountBehavior extends ModelBehavior {
 		$message = '';
 		if ($id) {
 			$Model->id = $id;
-			$Model->log($request, 'forgotten_password_valid');
+			//$Model->log($request, 'forgotten_password_valid');
 			$expires = strtotime($Model->field('modified')) + 60 * 60 * 24;
 			if ($expires < time()) {
 				$Model->save(array());
@@ -413,7 +411,7 @@ class UserAccountBehavior extends ModelBehavior {
 			}
 			$message = __d('mi_users', 'problem sending email', true);
 		} else {
-			$Model->log($request, 'forgotten_password_invalid');
+			//$Model->log($request, 'forgotten_password_invalid');
 			$message = __d('mi_users', 'password change email sent', true);
 			if (Configure::read()) {
 				$message .= ' <br />DEBUG:' . __d('mi_users', 'email not found', true);

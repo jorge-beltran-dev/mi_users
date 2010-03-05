@@ -66,7 +66,7 @@ class RememberMeComponent extends Object {
 		),
 		'rememberMeField' => 'remember_me',
 		'loginCallback' => false,
-		'debug' => true
+		'debug' => false
 	);
 
 /**
