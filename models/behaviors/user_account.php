@@ -573,7 +573,7 @@ class UserAccountBehavior extends ModelBehavior {
 			$template = Inflector::tableize($Model->alias) . '/' . $template;
 		}
 		$fields = $this->settings[$Model->alias]['fields'];
-		$defaultData = $Model->find('first', array($Model->primaryKey => $Model->id));
+		$defaultData = $Model->find('first', array('conditions' => array($Model->primaryKey => $Model->id)));
 		$defaultData[$Model->alias]['to'] = $defaultData[$Model->alias][$fields['email']];
 		$defaultData[$Model->alias]['from_user_id'] = 0;
 		$defaultData[$Model->alias]['emailType'] = 'normal';
