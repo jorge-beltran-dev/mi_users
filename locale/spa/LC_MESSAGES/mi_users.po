@@ -21,11 +21,11 @@ msgstr "%1$s no coincide con el correo %2$s"
 
 #: models/behaviors/user_account.php:256;550
 msgid ". Your new password is <strong>%1$s</strong>"
-msgstr "Tu nueva contraseña es <strong>%1$s</strong>"
+msgstr "Tu nueva contraseÃ±a es <strong>%1$s</strong>"
 
 #: models/behaviors/user_account.php:510
 msgid ". Your password is <strong>%1$s</strong>"
-msgstr "Tu contraseña es <strong>%1$s</strong>"
+msgstr "Tu contraseÃ±a es <strong>%1$s</strong>"
 
 #: views/elements/users/login_or_register.ctp:11
 msgid "Choose your username"
@@ -53,7 +53,7 @@ msgstr "Nuevo usuario"
 
 #: views/elements/users/login_or_register.ctp:15
 msgid "Register to continue"
-msgstr "Regístrate para continuar"
+msgstr "RegÃ­strate para continuar"
 
 #: models/behaviors/user_account.php:356
 msgid "Thank you for confirming your account"
@@ -61,7 +61,7 @@ msgstr "Gracias por confirmar tu cuenta"
 
 #: models/behaviors/user_account.php:261
 msgid "There was a problem changing your password"
-msgstr "Ha ocurrido un error al cambiar tu contraseña"
+msgstr "Ha ocurrido un error al cambiar tu contraseÃ±a"
 
 #: views/elements/users/login_or_register.ctp:9
 msgid "Username or email"
@@ -73,56 +73,56 @@ msgstr "Bienvenido %1$s"
 
 #: models/behaviors/user_account.php:254
 msgid "Your password has been changed"
-msgstr "Tu contraseña ha sido modificada"
+msgstr "Tu contraseÃ±a ha sido modificada"
 
 #: models/behaviors/user_account.php:548
 msgid "Your password has been changed. Please login"
-msgstr "Tu contraseña se ha modificado. Por favor, accede"
+msgstr "Tu contraseÃ±a se ha modificado. Por favor, accede"
 
 #: views/elements/users/login_or_register.ctp:13
 msgid "confirm"
-msgstr "confirma"
+msgstr "Confirma"
 
 #: models/behaviors/user_account.php:345
 msgid "confirm email token expired"
-msgstr "código de confirmación por correo caducado"
+msgstr "CÃ³digo de confirmacÃ³n por correo caducado"
 
 #: models/behaviors/user_account.php:313;423
 msgid "email not found"
-msgstr "email no encontrado"
+msgstr "Email no encontrado"
 
 #: models/behaviors/user_account.php:342
 msgid "email token expired"
-msgstr "código por correo caducado"
+msgstr "CÃ³digo por correo caducado"
 
 #: models/behaviors/user_account.php:515
 msgid "errors in form"
-msgstr "errores en el formulario"
+msgstr "Errores en el formulario"
 
 #: views/elements/users/login_or_register.ctp:12
 msgid "password"
-msgstr "contraseña"
+msgstr "ContraseÃ±a"
 
 #: models/behaviors/user_account.php:415;421
 msgid "password change email sent"
-msgstr "cambio de contraseña enviado por correo"
+msgstr "Cambio de contraseÃ±a enviado por correo"
 
 #: models/behaviors/user_account.php:539
 msgid "please enter your new password"
-msgstr "por favor, introduce tu nueva contraseña"
+msgstr "Por favor, introduce tu nueva contraseÃ±a"
 
 #: models/behaviors/user_account.php:418
 msgid "problem sending email"
-msgstr "ha habido un problema al enviar el correo"
+msgstr "Ha habido un problema al enviar el correo"
 
 #: views/elements/users/login_or_register.ctp:38
 msgid "terms of service"
-msgstr "condiciones del servicio"
+msgstr "Condiciones del servicio"
 
 #: models/behaviors/user_account.php:332
 msgid "token does not match"
-msgstr "el código no coincide"
+msgstr "El cÃ³digo no coincide"
 
 #: models/behaviors/user_account.php:311;320;330
 msgid "token not found"
-msgstr "código no encontrado"
+msgstr "CÃ³digo no encontrado"
