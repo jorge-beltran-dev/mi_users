@@ -1,0 +1,128 @@
+# LANGUAGE translation of Mi Users Application
+# Copyright 2009 Your Name <you@example.com>
+# --VERSIONS--
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: mi_users-unknown\n"
+"POT-Creation-Date: 2009-11-09 15:46+0100\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: Your Name <you@example.com>\n"
+"Language-Team:\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../../\n"
+
+#: models/behaviors/user_account.php:322
+msgid "%1$s does not match for email %2$s"
+msgstr "%1$s no coincide con el correo %2$s"
+
+#: models/behaviors/user_account.php:256;550
+msgid ". Your new password is <strong>%1$s</strong>"
+msgstr "Tu nueva contraseña es <strong>%1$s</strong>"
+
+#: models/behaviors/user_account.php:510
+msgid ". Your password is <strong>%1$s</strong>"
+msgstr "Tu contraseña es <strong>%1$s</strong>"
+
+#: views/elements/users/login_or_register.ctp:11
+msgid "Choose your username"
+msgstr "Escoge tu nombre de usuario"
+
+#: views/elements/users/login_or_register.ctp:10
+msgid "Email"
+msgstr "Email"
+
+#: views/elements/users/login_or_register.ctp:38
+msgid "I agree to the site %1$s"
+msgstr "Estoy de acuerdo con el sitio %1$s"
+
+#: views/elements/users/login_or_register.ctp:8
+msgid "I've already got an account"
+msgstr "Ya tengo una cuenta"
+
+#: views/elements/users/login_or_register.ctp:14
+msgid "Login to continue"
+msgstr "Accede para continuar"
+
+#: views/elements/users/login_or_register.ctp:7
+msgid "New User"
+msgstr "Nuevo usuario"
+
+#: views/elements/users/login_or_register.ctp:15
+msgid "Register to continue"
+msgstr "Regístrate para continuar"
+
+#: models/behaviors/user_account.php:356
+msgid "Thank you for confirming your account"
+msgstr "Gracias por confirmar tu cuenta"
+
+#: models/behaviors/user_account.php:261
+msgid "There was a problem changing your password"
+msgstr "Ha ocurrido un error al cambiar tu contraseña"
+
+#: views/elements/users/login_or_register.ctp:9
+msgid "Username or email"
+msgstr "Nombre de usuario o email"
+
+#: models/behaviors/user_account.php:508
+msgid "Welcome %1$s!"
+msgstr "Bienvenido %1$s"
+
+#: models/behaviors/user_account.php:254
+msgid "Your password has been changed"
+msgstr "Tu contraseña ha sido modificada"
+
+#: models/behaviors/user_account.php:548
+msgid "Your password has been changed. Please login"
+msgstr "Tu contraseña se ha modificado. Por favor, accede"
+
+#: views/elements/users/login_or_register.ctp:13
+msgid "confirm"
+msgstr "confirma"
+
+#: models/behaviors/user_account.php:345
+msgid "confirm email token expired"
+msgstr "código de confirmación por correo caducado"
+
+#: models/behaviors/user_account.php:313;423
+msgid "email not found"
+msgstr "email no encontrado"
+
+#: models/behaviors/user_account.php:342
+msgid "email token expired"
+msgstr "código por correo caducado"
+
+#: models/behaviors/user_account.php:515
+msgid "errors in form"
+msgstr "errores en el formulario"
+
+#: views/elements/users/login_or_register.ctp:12
+msgid "password"
+msgstr "contraseña"
+
+#: models/behaviors/user_account.php:415;421
+msgid "password change email sent"
+msgstr "cambio de contraseña enviado por correo"
+
+#: models/behaviors/user_account.php:539
+msgid "please enter your new password"
+msgstr "por favor, introduce tu nueva contraseña"
+
+#: models/behaviors/user_account.php:418
+msgid "problem sending email"
+msgstr "ha habido un problema al enviar el correo"
+
+#: views/elements/users/login_or_register.ctp:38
+msgid "terms of service"
+msgstr "condiciones del servicio"
+
+#: models/behaviors/user_account.php:332
+msgid "token does not match"
+msgstr "el código no coincide"
+
+#: models/behaviors/user_account.php:311;320;330
+msgid "token not found"
+msgstr "código no encontrado"
