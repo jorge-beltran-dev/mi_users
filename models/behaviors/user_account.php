@@ -899,7 +899,7 @@ class UserAccountBehavior extends ModelBehavior {
 		extract ($this->settings[$Model->alias]['fields']);
 		$Model->validate[$password_confirm] = array('notSame' => array('rule' => 'validateConfirmMatch',
 			$password));
-		//$Model->validate[$current] = array('notCurrent' => array('rule' => 'validateCurrentPassword'));
+		$Model->validate[$current] = array('notCurrent' => array('rule' => 'validateCurrentPassword'));
 		$Model->validate[$password] = array(
 			'missing' => array('rule' => 'validatePasswordNotEmpty', $password_confirm, 'last' => true),
 			'tooShort' => array('rule' => 'validatePasswordLength', $password_confirm, 'last' => true),
