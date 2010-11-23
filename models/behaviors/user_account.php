@@ -46,6 +46,7 @@ class UserAccountBehavior extends ModelBehavior {
  * 	password_confirm - a second password input to match the password
  * 	confirmation - used in the password recovery process. A field that the user must enter, defaults to username
  * 	username - the same as the Auth component username field
+ *  role - the field for the user's role (group)
  * 	token - the field used for entering the (email) token. included here to reduce code repeition
  *
  * 	All Fields can be either "field" or "associatedModel.field"
@@ -55,7 +56,7 @@ class UserAccountBehavior extends ModelBehavior {
  * Password Policy:
  *	The current password policy
  * Token:
- * 	fields - which fields to be used when generating a token, defaults to al
+ * 	fields - which fields to be used when generating a token, defaults to all
  * 	length - how long to make the token, defaults to whatever Security::hash returns
  * 	recursive - the recursive value to be used when generating a token
  *
@@ -68,7 +69,7 @@ class UserAccountBehavior extends ModelBehavior {
 	var $_defaultSettings = array(
 		'sendEmails' => array(
 			'welcome' => true,
-			'accountChange' => true,
+			'accountChange' => true
 		),
 		'fields' => array(
 			'current' => 'current_password',
@@ -77,21 +78,22 @@ class UserAccountBehavior extends ModelBehavior {
 			'password_confirm' => 'confirm',
 			'confirmation' => 'username',
 			'username' => 'username',
+			'role' => 'role',
 			'token' => 'token',
-			'tos' => 'tos',
+			'tos' => 'tos'
 		),
 		'passwordPolicies' => array(
 			'weak' => array('length' => 6, 'salt' => 'abcdefghijklmnopqrstuvwxyz0123456789'),
 			'normal' => array('length' => 8),
 			'medium' => array('length' => 8, 'salt' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
 			'strong' => array('length' => 8, 'salt' => '!@#~$%&/()=+?"\',.;:-_*\/'),
-			'super' => array('length' => 40),
+			'super' => array('length' => 40)
 		),
 		'passwordPolicy' => 'medium',
 		'token' => array(
 			'fields' => '*',
 			'length' => 0,
-			'recursive' => -1,
+			'recursive' => -1
 		)
 	);
 
@@ -140,13 +142,13 @@ class UserAccountBehavior extends ModelBehavior {
 			return;
 		}
 		extract($this->settings[$Model->alias]);
-		if(!empty($__passwordChanged)) {
+		if (!empty($__passwordChanged)) {
 			$data[$Model->alias]['change'] = 'password';
 			$data[$Model->alias]['emailType'] = 'private';
 			$this->sendMail($Model, 'account_change', $data);
 			unset ($this->settings[$Model->alias]['__passwordChanged']);
 		}
-		if(!empty($__emailChanged)) {
+		if (!empty($__emailChanged)) {
 			$data[$Model->alias]['to'] = $__emailChanged;
 			$data[$Model->alias]['change'] = 'email';
 			$data[$Model->alias]['oldValue'] = $__emailChanged;
@@ -154,7 +156,7 @@ class UserAccountBehavior extends ModelBehavior {
 			$this->sendMail($Model, 'account_change', $data);
 			unset ($this->settings[$Model->alias]['__emailChanged']);
 		}
-		if(!empty($__usernameChanged)) {
+		if (!empty($__usernameChanged)) {
 			$data[$Model->alias]['change'] = 'username';
 			$data[$Model->alias]['oldValue'] = $__usernameChanged;
 			$data[$Model->alias]['emailType'] = 'private';
@@ -174,15 +176,15 @@ class UserAccountBehavior extends ModelBehavior {
 	function beforeSave(&$Model) {
 		extract($this->settings[$Model->alias]['fields']);
 		if ($Model->id) {
-			if(isset($Model->data[$Model->alias][$password]) &&
+			if (isset($Model->data[$Model->alias][$password]) &&
 				$Model->data[$Model->alias][$password] != $Model->field($password)) {
 				$this->settings[$Model->alias]['__passwordChanged'] = true;
 			}
-			if(!empty($Model->data[$Model->alias][$email]) &&
+			if (!empty($Model->data[$Model->alias][$email]) &&
 				$Model->data[$Model->alias][$email] != $Model->field($email)) {
 				$this->settings[$Model->alias]['__emailChanged'] = $Model->field($email);
 			}
-			if($email != $username && isset($Model->data[$Model->alias][$username]) &&
+			if ($email != $username && isset($Model->data[$Model->alias][$username]) &&
 				$Model->data[$Model->alias][$username] != $Model->field($username)) {
 				$this->settings[$Model->alias]['__usernameChanged'] = $Model->field($username);
 			}
@@ -569,9 +571,9 @@ class UserAccountBehavior extends ModelBehavior {
  */
 	function sendMail(&$Model, $template, $data = array(), $subject = null) {
 		if (!$Model->id) {
-		       if (empty($data[$Model->primaryKey])) {
-			       return false;
-		       }
+			if (empty($data[$Model->primaryKey])) {
+				return false;
+			}
 			$Model->id = $data[$Model->primaryKey];
 		}
 		if (!strpos($template, '/')) {
