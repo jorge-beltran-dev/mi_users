@@ -354,9 +354,11 @@ class UserAccountBehavior extends ModelBehavior {
 	}
 
 /**
- * display method
+ * Try to get a display value for a user.
  *
- * Fall back. Assumes that find list is setup such that it returns users real names
+ * Fall back. Assumes that find list is setup such that it returns users real names.
+ * If $Model->displayField is set to primary key (default or not manually set), it
+ * defaults to user's username.
  *
  * @param mixed $id
  * @return string
@@ -368,6 +370,9 @@ class UserAccountBehavior extends ModelBehavior {
 				return false;
 			}
 			$id = $Model->id;
+		}
+		if ($Model->displayField == $Model->primaryKey) {
+			$Model->displayField = $this->settings[$Model->alias]['fields']['username'];
 		}
 		return current($Model->find('list', array('conditions' => array($Model->alias . '.' . $Model->primaryKey => $id))));
 	}
