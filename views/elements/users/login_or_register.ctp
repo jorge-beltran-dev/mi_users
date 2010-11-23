@@ -3,7 +3,7 @@ echo $form->create(null, array('id' => 'loginOrRegister'));
 if (empty($texts)) {
 	$texts = array();
 }
-$texts = array_merge($texts,array(
+$texts = array_merge($texts, array(
 	'new' => __d('mi_users', 'New User', true),
 	'existing' => __d('mi_users', 'I\'ve already got an account', true),
 	'login' => __d('mi_users', 'Username or email', true),
@@ -49,20 +49,20 @@ $code = <<<CODE
 $(function() {
 	$('input#UserTos').parent().hide();
 	$('input#UserTypeNew').click(function() {
-		$('input#UserEmail').prev().text(__('Email'));
+		$('input#UserEmail').prev().text(__d('mi_users', 'Email'));
 		$('input#UserUsername').parent().show();
 		$('input#UserPassword').parent().show();
 		$('input#UserConfirm').parent().show();
 		$('input#User1').parent().show();
-		$('input#loginOrRegisterSubmit').text(__('Register to continue'));
+		$('input#loginOrRegisterSubmit').text(__d('mi_users', 'Register to continue'));
 	});
 	$('input#UserTypeExisting').click(function() {
-		$('input#UserEmail').prev().text(__('Email or username'));
+		$('input#UserEmail').prev().text(__d('mi_users', 'Email or username'));
 		$('input#UserUsername').parent().hide();
 		$('input#UserPassword').parent().show();
 		$('input#UserConfirm').parent().hide();
 		$('input#User1').parent().hide();
-		$('input#loginOrRegisterSubmit').text(__('Login to continue'));
+		$('input#loginOrRegisterSubmit').text(__d('mi_users', 'Login to continue'));
 	});
 });
 CODE;
