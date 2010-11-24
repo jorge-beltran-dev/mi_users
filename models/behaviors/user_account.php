@@ -46,7 +46,6 @@ class UserAccountBehavior extends ModelBehavior {
  * 	password_confirm - a second password input to match the password
  * 	confirmation - used in the password recovery process. A field that the user must enter, defaults to username
  * 	username - the same as the Auth component username field
- *  role - the field for the user's role (group)
  * 	token - the field used for entering the (email) token. included here to reduce code repeition
  *
  * 	All Fields can be either "field" or "associatedModel.field"
@@ -78,7 +77,6 @@ class UserAccountBehavior extends ModelBehavior {
 			'password_confirm' => 'confirm',
 			'confirmation' => 'username',
 			'username' => 'username',
-			'role' => 'role',
 			'token' => 'token',
 			'tos' => 'tos'
 		),
