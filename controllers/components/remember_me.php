@@ -97,26 +97,10 @@ class RememberMeComponent extends Object {
 			$this->enabled = false;
 			return;
 		}
-
 		$this->settings = Set::merge($this->settings, $config);
 		$this->Controller =& $C;
 		$this->_setupAuth();
-		$url = Router::normalize($C->params['url']['url']);
-		if ($url === Router::normalize($this->settings['auth']['logoutAction'])) {
-			//$this->Controller->Auth->logout();
-			$this->_cookieDestroy();
-			$this->log('Disabling - logging out');
-			$this->enabled = false;
-		} elseif ($this->__authUserId) {
-			$this->log('Disabling - User already logged in');
-			$this->enabled = false;
-		} elseif ($this->_cookieAuth()) {
-			$this->log('Disabling - Nothing else to do');
-			$this->enabled = false;
-		} elseif ($url !== Router::normalize($this->settings['auth']['loginAction'])) {
-			$this->log('Disabling - Not the login action');
-			$this->enabled = false;
-		}
+		$this->check();
 	}
 
 /**
@@ -142,6 +126,45 @@ class RememberMeComponent extends Object {
 		}
 		return $url;
 	}
+
+/**
+ * check method
+ *
+ * If they're trying to logout - delete the remember me cookie if it exists and disable further processing
+ * If there's already a user logged in, there's nothing this component needs to do so disable the component
+ * Else check for cookie data, and attempt to log in if found
+ *
+ * @return void
+ * @access public
+*/
+	function check() {
+		if (!isset($this->Controller)) {
+			return;	
+		}
+		$url = Router::normalize($this->Controller->params['url']['url']);
+		if ($url === Router::normalize($this->settings['auth']['logoutAction'])) {
+			$this->Controller->Auth->logout();
+			$this->_cookieDestroy();
+			$this->log('Disabling - logging out');
+			$this->enabled = false;
+			return;
+		}
+		if ($this->__authUserId) {
+			$this->log('Disabling - User already logged in');
+			$this->enabled = false;
+			return;
+		}
+		if ($this->Auth->Session->started() && $this->_cookieAuth()) {
+			$this->log('Disabling - Nothing else to do');
+			$this->enabled = false;
+			return;	
+		}
+		if ($url === Router::normalize($this->settings['auth']['loginAction'])) {
+			$this->enabled = true;
+			return;
+		}
+		$this->enabled = false;
+}
 
 /**
  * log method
@@ -310,12 +333,13 @@ class RememberMeComponent extends Object {
 				return;
 			} else {
 				$this->Controller->Cookie->initialize($this->Controller, $this->settings['cookie']);
+				$this->Controller->Cookie->startup($this->Controller);
 			}
-		} else {
-			App::import('Component', 'Cookie');
-			$this->Controller->Cookie = new CookieComponent();
-			$this->Controller->Cookie->initialize($this->Controller, $this->settings['cookie']);
+		if (empty($this->Controller->SwissArmy)) {
+			App::import('Component', 'Mi.SwissArmy');
+			$this->Controller->SwissArmy = new SwissArmyComponent();
 		}
+		$this->Controller->SwissArmy->loadComponent('Cookie', $this->settings['cookie']);
 	}
 
 /**

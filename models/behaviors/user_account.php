@@ -58,6 +58,7 @@ class UserAccountBehavior extends ModelBehavior {
  * 	fields - which fields to be used when generating a token, defaults to all
  * 	length - how long to make the token, defaults to whatever Security::hash returns
  * 	recursive - the recursive value to be used when generating a token
+ * 	expires - the number of days after the token expires (0 for no expire time)
  *
  * 	The fields and recursive settings allow a user's profile or address to be included in the token, whilst excluding
  * 	counterCache fields or other fields that may change often and are not useful to include in the token
@@ -91,7 +92,8 @@ class UserAccountBehavior extends ModelBehavior {
 		'token' => array(
 			'fields' => '*',
 			'length' => 0,
-			'recursive' => -1
+			'recursive' => -1,
+			'expires' => 1
 		)
 	);
 
@@ -328,19 +330,21 @@ class UserAccountBehavior extends ModelBehavior {
 				}
 				return array(false, $message);
 			}
-			$expires = strtotime($user[$Model->alias]['modified']) + 60 * 60 * 24;
-			if ($expires < time() && !$force) {
-				$Model->invalidate('token', 'expired');
-				if ($password) {
-					$this->sendMail($Model, 'new_password');
-					$message = __d('mi_users', 'email token expired', true);
-				} else {
-					$this->sendMail($Model, 'new_token');
-					$message = __d('mi_users', 'confirm email token expired', true);
+			if (!empty($this->settings[$Model->alias]['token']['expires'])) {
+				$expires = strtotime($user[$Model->alias]['modified']) + 60 * 60 * 24 * $this->settings[$Model->alias]['token']['expires'];
+				if ($expires < time() && !$force) {
+					$Model->invalidate('token', 'expired');
+					if ($password) {
+						$this->sendMail($Model, 'new_password');
+						$message = __d('mi_users', 'email token expired', true);
+					} else {
+						$this->sendMail($Model, 'new_token');
+						$message = __d('mi_users', 'confirm email token expired', true);
+					}
+					return array(false, $message);
 				}
-				return array(false, $message);
 			}
-		}
+		
 		if ($password) {
 			return true;
 		}
