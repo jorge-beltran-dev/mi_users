@@ -335,6 +335,7 @@ class RememberMeComponent extends Object {
 				$this->Controller->Cookie->initialize($this->Controller, $this->settings['cookie']);
 				$this->Controller->Cookie->startup($this->Controller);
 			}
+		}
 		if (empty($this->Controller->SwissArmy)) {
 			App::import('Component', 'Mi.SwissArmy');
 			$this->Controller->SwissArmy = new SwissArmyComponent();
