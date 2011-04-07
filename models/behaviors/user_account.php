@@ -344,6 +344,7 @@ class UserAccountBehavior extends ModelBehavior {
 					return array(false, $message);
 				}
 			}
+		}
 		
 		if ($password) {
 			return true;
@@ -921,4 +922,3 @@ class UserAccountBehavior extends ModelBehavior {
 		$Model->validate[$tos][] = array('rule' => array('equalTo', '1'));
 	}
 }
-?>
