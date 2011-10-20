@@ -153,15 +153,15 @@ class UserAccountBehavior extends ModelBehavior {
 			$data[$Model->alias]['change'] = 'email';
 			$data[$Model->alias]['oldValue'] = $__emailChanged;
 			$data[$Model->alias]['emailType'] = 'private';
-			$this->sendMail($Model, 'account_change', $data);
-			unset ($this->settings[$Model->alias]['__emailChanged'], __('Tu cuenta ha sido modificada', true));
+			$this->sendMail($Model, 'account_change', $data, __('Tu cuenta ha sido modificada', true));
+			unset ($this->settings[$Model->alias]['__emailChanged']);
 		}
 		if (!empty($__usernameChanged)) {
 			$data[$Model->alias]['change'] = 'username';
 			$data[$Model->alias]['oldValue'] = $__usernameChanged;
 			$data[$Model->alias]['emailType'] = 'private';
-			$this->sendMail($Model, 'account_change', $data);
-			unset ($this->settings[$Model->alias]['__usernameChanged'], __('Tu cuenta ha sido modificada', true));
+			$this->sendMail($Model, 'account_change', $data, __('Tu cuenta ha sido modificada', true));
+			unset ($this->settings[$Model->alias]['__usernameChanged']);
 		}
 	}
 
