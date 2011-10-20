@@ -247,14 +247,14 @@ class UserAccountBehavior extends ModelBehavior {
 			$data[$Model->alias][$fields['username']] = $Model->field($fields['username']);
 		}
 		if ($data = $Model->save($data, true, array($fields['current'], $fields['password'], $fields['password_confirm']))) {
-			$message = __d('mi_users', 'Your password has been changed', true);
+			$message = __d('mi_users', 'Tu contraseña ha sido cambiada', true);
 			if (!empty($this->settings[$Model->alias]['tempPassword'])) {
-				$message .= sprintf(__d('mi_users', '. Your new password is <strong>%1$s</strong>', true), $this->settings[$Model->alias]['tempPassword']);
+				$message .= sprintf(__d('mi_users', '. Tu nueva contraseña es <strong>%1$s</strong>', true), $this->settings[$Model->alias]['tempPassword']);
 				unset ($this->settings[$Model->alias]['tempPassword']);
 			}
 			return array(true, $message);
 		} else {
-			$message = __d('mi_users', 'There was a problem changing your password', true);
+			$message = __d('mi_users', 'Ha ocurrido un problema cambiando tu contraseña', true);
 		}
 		return array(false, $message);
 	}
@@ -304,18 +304,18 @@ class UserAccountBehavior extends ModelBehavior {
 			$fields = $this->settings[$Model->alias]['fields'];
 			if (!$user) {
 				$Model->invalidate('token', 'not found');
-				$message = __d('mi_users', 'token not found', true);
+				$message = __d('mi_users', 'Código no encontrado', true);
 				if (Configure::read()) {
-					$message .= ' <br />DEBUG:' . __d('mi_users', 'email not found', true);
+					$message .= ' <br />DEBUG:' . __d('mi_users', 'Email no encontrado', true);
 				}
 				return array(false, $message);
 			}
 			$Model->id = $user[$Model->alias][$Model->primaryKey];
 			if ($fields['confirmation'] !== false && !$Model->userAccountField($fields['confirmation'], $data, true)) {
 				$Model->invalidate('token', 'not found');
-				$message = __d('mi_users', 'token not found', true);
+				$message = __d('mi_users', 'Código no encontrado', true);
 				if (Configure::read()) {
-					$message .= ' <br />DEBUG:' . sprintf(__d('mi_users', '%1$s does not match for email %2$s', true),
+					$message .= ' <br />DEBUG:' . sprintf(__d('mi_users', '%1$s no coincide para el email %2$s', true),
 						$fields['confirmation'], $data[$Model->alias][$fields['email']]);
 				}
 				return array(false, $message);
@@ -323,9 +323,9 @@ class UserAccountBehavior extends ModelBehavior {
 			$token = $this->token($Model, $user);
 			if ($token !== $data[$Model->alias]['token']) {
 				$Model->invalidate('token', 'not found');
-				$message = __d('mi_users', 'token not found', true);
+				$message = __d('mi_users', 'Código no encontrado', true);
 				if (Configure::read()) {
-					$message .= ' <br />DEBUG:' . __d('mi_users', 'token does not match', true);
+					$message .= ' <br />DEBUG:' . __d('mi_users', 'El código no coincide', true);
 					$message .= ' <br />' . $token;
 				}
 				return array(false, $message);
@@ -335,11 +335,18 @@ class UserAccountBehavior extends ModelBehavior {
 				if ($expires < time() && !$force) {
 					$Model->invalidate('token', 'expired');
 					if ($password) {
+
 						$this->sendMail($Model, 'new_password', array(), __('Nueva contraseña', true));
-						$message = __d('mi_users', 'email token expired', true);
+						$message = __d('mi_users', 'El código del email ha expirado', true);
 					} else {
 						$this->sendMail($Model, 'new_token', array(), __('Nuevo código de verificación', true));
-						$message = __d('mi_users', 'confirm email token expired', true);
+						$message = __d('mi_users', 'El código del email de confirmación ha expirado', true);
+						$this->sendMail($Model, 'new_password');
+						
+					} else {
+						$this->sendMail($Model, 'new_token');
+						$message = __d('mi_users', 'El código del email de confirmación ha expirado', true);
+
 					}
 					return array(false, $message);
 				}
@@ -352,7 +359,7 @@ class UserAccountBehavior extends ModelBehavior {
 		$message = '';
 		$Model->id = $user[$Model->alias][$Model->primaryKey];
 		if ($return = $Model->saveField('email_verified', true)) {
-			$message = __d('mi_users', 'Thank you for confirming your account', true);
+			$message = __d('mi_users', 'Gracias por confirmar tu cuenta', true);
 			return array(true, $message);
 		}
 		return array(false, $message);
@@ -415,16 +422,17 @@ class UserAccountBehavior extends ModelBehavior {
 			};
 			$data[$Model->alias]['token'] = $Model->token();
 			$data[$Model->alias]['emailType'] = 'private';
+
 			if ($this->sendMail($Model, 'forgotten_password', $data, __('Recuperar contraseña', true))) {
-				$message = __d('mi_users', 'password change email sent', true);
+				$message = __d('mi_users', 'El email del cambio de contraseña ha sido enviado', true);
 				return array(true, $message);
 			}
-			$message = __d('mi_users', 'problem sending email', true);
+			$message = __d('mi_users', 'Ha ocurrido un problema enviando el email', true);
 		} else {
 			//$Model->log($request, 'forgotten_password_invalid');
-			$message = __d('mi_users', 'password change email sent', true);
+			$message = __d('mi_users', 'El email del cambio de contraseña ha sido enviado', true);
 			if (Configure::read()) {
-				$message .= ' <br />DEBUG:' . __d('mi_users', 'email not found', true);
+				$message .= ' <br />DEBUG:' . __d('mi_users', 'Email no encontrado', true);
 			}
 			return array(true, $message);
 		}
@@ -509,14 +517,14 @@ class UserAccountBehavior extends ModelBehavior {
 	function register(&$Model, $data, $whitelist = array()) {
 		extract($this->settings[$Model->alias]);
 		if ($_data = $Model->saveAll($data, array('validate' => true, 'fieldList' => $whitelist))) {
-			$message = sprintf(__d('mi_users', 'Welcome %1$s!', true), $Model->display());
+			$message = sprintf(__d('mi_users', 'Bienvenido %1$s!', true), $Model->display());
 			if (!empty($data[$Model->alias]['generate'])) {
-				$message .= sprintf(__d('mi_users', '. Your password is <strong>%1$s</strong>', true),
+				$message .= sprintf(__d('mi_users', '. Tu contraseña es <strong>%1$s</strong>', true),
 					$_data[$Model->alias][$fields['password_confirm']]);
 			}
 			return array(true, $message);
 		} else {
-			$message = __d('mi_users', 'errors in form', true);
+			$message = __d('mi_users', 'Hay errores en el formulario', true);
 		}
 		return array(false, $message);
 	}
@@ -540,7 +548,7 @@ class UserAccountBehavior extends ModelBehavior {
 		}
 		if (!$force) {
 			if (!isset($data[$Model->alias][$fields['password']])) {
-				$message = __d('mi_users', 'please enter your new password', true);
+				$message = __d('mi_users', 'Por favor, introduce tu nueva contraseña', true);
 				return array(false, $message);
 			}
 		}
@@ -549,9 +557,9 @@ class UserAccountBehavior extends ModelBehavior {
 			$data[$Model->alias][$fields['username']]));
 		$data[$Model->alias]['email_verified'] = 1;
 		if ($return = $Model->save($data, true, array($fields['password'], $fields['password_confirm'], 'email_verified'))) {
-			$message = __d('mi_users', 'Your password has been changed. Please login', true);
+			$message = __d('mi_users', 'Tu contraseña ha cambiado. Por favor autentifícate', true);
 			if (!empty($this->settings[$Model->alias]['tempPassword'])) {
-				$message .= sprintf(__d('mi_users', '. Your new password is <strong>%1$s</strong>', true), $this->settings[$Model->alias]['tempPassword']);
+				$message .= sprintf(__d('mi_users', '. Tu nueva contraseña es <strong>%1$s</strong>', true), $this->settings[$Model->alias]['tempPassword']);
 				unset ($this->settings[$Model->alias]['tempPassword']);
 			}
 			return array(true, $message);
