@@ -134,7 +134,7 @@ class UserAccountBehavior extends ModelBehavior {
 			if ($this->settings[$Model->alias]['sendEmails']['welcome']) {
 				$data[$Model->alias]['emailType'] = 'private';
 				$data[$Model->alias]['token'] = $Model->token();
-				$this->sendMail($Model, 'welcome', $data);
+				$this->sendMail($Model, 'welcome', $data, __('Bienvenido. Confirma tu cuenta', true));
 			}
 			return;
 		}
@@ -145,7 +145,7 @@ class UserAccountBehavior extends ModelBehavior {
 		if (!empty($__passwordChanged)) {
 			$data[$Model->alias]['change'] = 'password';
 			$data[$Model->alias]['emailType'] = 'private';
-			$this->sendMail($Model, 'account_change', $data);
+			$this->sendMail($Model, 'account_change', $data, __('Tu cuenta ha sido modificada', true));
 			unset ($this->settings[$Model->alias]['__passwordChanged']);
 		}
 		if (!empty($__emailChanged)) {
@@ -154,14 +154,14 @@ class UserAccountBehavior extends ModelBehavior {
 			$data[$Model->alias]['oldValue'] = $__emailChanged;
 			$data[$Model->alias]['emailType'] = 'private';
 			$this->sendMail($Model, 'account_change', $data);
-			unset ($this->settings[$Model->alias]['__emailChanged']);
+			unset ($this->settings[$Model->alias]['__emailChanged'], __('Tu cuenta ha sido modificada', true));
 		}
 		if (!empty($__usernameChanged)) {
 			$data[$Model->alias]['change'] = 'username';
 			$data[$Model->alias]['oldValue'] = $__usernameChanged;
 			$data[$Model->alias]['emailType'] = 'private';
 			$this->sendMail($Model, 'account_change', $data);
-			unset ($this->settings[$Model->alias]['__usernameChanged']);
+			unset ($this->settings[$Model->alias]['__usernameChanged'], __('Tu cuenta ha sido modificada', true));
 		}
 	}
 
@@ -335,10 +335,10 @@ class UserAccountBehavior extends ModelBehavior {
 				if ($expires < time() && !$force) {
 					$Model->invalidate('token', 'expired');
 					if ($password) {
-						$this->sendMail($Model, 'new_password');
+						$this->sendMail($Model, 'new_password', array(), __('Nueva contraseña', true));
 						$message = __d('mi_users', 'email token expired', true);
 					} else {
-						$this->sendMail($Model, 'new_token');
+						$this->sendMail($Model, 'new_token', array(), __('Nuevo código de verificación', true));
 						$message = __d('mi_users', 'confirm email token expired', true);
 					}
 					return array(false, $message);
@@ -415,7 +415,7 @@ class UserAccountBehavior extends ModelBehavior {
 			};
 			$data[$Model->alias]['token'] = $Model->token();
 			$data[$Model->alias]['emailType'] = 'private';
-			if ($this->sendMail($Model, 'forgotten_password', $data)) {
+			if ($this->sendMail($Model, 'forgotten_password', $data, __('Recuperar contraseña', true))) {
 				$message = __d('mi_users', 'password change email sent', true);
 				return array(true, $message);
 			}
