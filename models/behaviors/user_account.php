@@ -342,11 +342,6 @@ class UserAccountBehavior extends ModelBehavior {
 						$this->sendMail($Model, 'new_token', array(), __('Nuevo código de verificación', true));
 						$message = __d('mi_users', 'El código del email de confirmación ha expirado', true);
 						$this->sendMail($Model, 'new_password');
-						
-					} else {
-						$this->sendMail($Model, 'new_token');
-						$message = __d('mi_users', 'El código del email de confirmación ha expirado', true);
-
 					}
 					return array(false, $message);
 				}
