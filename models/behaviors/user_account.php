@@ -134,7 +134,12 @@ class UserAccountBehavior extends ModelBehavior {
 			if ($this->settings[$Model->alias]['sendEmails']['welcome']) {
 				$data[$Model->alias]['emailType'] = 'private';
 				$data[$Model->alias]['token'] = $Model->token();
-				$this->sendMail($Model, 'welcome', $data, __('Bienvenido. Confirma tu cuenta', true));
+				if ($this->settings[$Model->alias]['sendEmails']['welcome'] == 'noAutoSend') {
+					$autoSend = false;	
+				} else {
+					$autoSend = true;
+				}
+				$this->sendMail($Model, 'welcome', $data, __('Bienvenido. Confirma tu cuenta', true), $autoSend);
 			}
 			return;
 		}
@@ -575,7 +580,7 @@ class UserAccountBehavior extends ModelBehavior {
  * @return bool
  * @access public
  */
-	function sendMail(&$Model, $template, $data = array(), $subject = null) {
+	function sendMail(&$Model, $template, $data = array(), $subject = null, $autoSend = true) {
 		if (!$Model->id) {
 			if (empty($data[$Model->primaryKey])) {
 				return false;
@@ -594,6 +599,9 @@ class UserAccountBehavior extends ModelBehavior {
 		$to = $data[$Model->alias]['to'];
 		$emailType = $data[$Model->alias]['emailType'];
 		$MiEmail = ClassRegistry::init('MiEmail');
+		if (!$autoSend) {
+			$MiEmail->Behaviors->attach('Email', array('autoSend' => false));
+		}
 		$MiEmail->create();
 		$MiEmail->send(array(
 			'from_user_id' => $data[$Model->alias]['from_user_id'],
