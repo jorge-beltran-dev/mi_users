@@ -29,7 +29,7 @@
  * @subpackage    mi_users.controllers.components
  */
 
-class RememberMeComponent extends Object {
+class RememberMeComponent extends Component {
 
 /**
  * name property
@@ -40,7 +40,7 @@ class RememberMeComponent extends Object {
 	var $name = 'RememberMe';
 
 /**
- * settings property
+ * defaults property
  *
  * Note that this component runs before you can edit the Auth component - hence any overrides are
  * specified here
@@ -55,7 +55,7 @@ class RememberMeComponent extends Object {
  * @var array
  * @access public
  */
-	var $settings = array(
+	var $defaults = array(
 		'auth' => array(
 			'loginAction' => array('controller' => 'users', 'action' => 'login'),
 			'logoutAction' => array('controller' => 'users', 'action' => 'logout'),
@@ -92,13 +92,13 @@ class RememberMeComponent extends Object {
  * @return void
  * @access public
  */
-	function initialize(&$C, $config = array()) {
+	function initialize(&$C) {
 		if ((Configure::read() && !$this->_setupCheck($C)) || !empty($C->params['requested'])) {
 			$this->enabled = false;
 			return;
 		}
-		$this->settings = Set::merge($this->settings, $config);
-		$this->Controller =& $C;
+		$this->settings = Set::merge($this->defaults, $this->settings);
+		$this->Controller = $C;
 		$this->_setupAuth();
 		$this->check();
 	}
@@ -141,7 +141,7 @@ class RememberMeComponent extends Object {
 		if (!isset($this->Controller)) {
 			return;	
 		}
-		$url = Router::normalize($this->Controller->params['url']['url']);
+		$url = Router::normalize($this->Controller->params['url']);
 		if ($url === Router::normalize($this->settings['auth']['logoutAction'])) {
 			$this->Controller->Auth->logout();
 			$this->_cookieDestroy();
@@ -291,7 +291,7 @@ class RememberMeComponent extends Object {
  * @access protected
  */
 	function _setupAuth() {
-		$this->Auth =& $this->Controller->Auth;
+		$this->Auth = $this->Controller->Auth;
 		foreach($this->settings['auth'] as $field => $val) {
 			$this->Auth->$field = $val;
 		}

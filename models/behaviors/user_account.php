@@ -695,7 +695,7 @@ class UserAccountBehavior extends ModelBehavior {
 		$key = key($data);
 		$value = $data[$key];
 		$compare = $Model->data[$Model->alias][$compare[0]];
-		return (Security::hash($value, null, true) === $compare);
+		return ($value === $compare);
 	}
 
 /**
