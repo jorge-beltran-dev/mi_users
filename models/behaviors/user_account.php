@@ -139,6 +139,7 @@ class UserAccountBehavior extends ModelBehavior {
 				} else {
 					$autoSend = true;
 				}
+				$data[$Model->alias]['from'] = Configure::read('Site.email');
 				$this->sendMail($Model, 'welcome', $data, __('Bienvenido. Confirma tu cuenta', true), $autoSend);
 			}
 			return;
@@ -422,6 +423,7 @@ class UserAccountBehavior extends ModelBehavior {
 			};
 			$data[$Model->alias]['token'] = $Model->token();
 			$data[$Model->alias]['emailType'] = 'private';
+			$data[$Model->alias]['from'] = array(Configure::read('Site.email') => Configure::read('Site.name'));
 
 			if ($this->sendMail($Model, 'forgotten_password', $data, __('Recuperar contraseña', true))) {
 				$message = __d('mi_users', 'El email del cambio de contraseña ha sido enviado', true);
@@ -588,7 +590,7 @@ class UserAccountBehavior extends ModelBehavior {
 			$Model->id = $data[$Model->primaryKey];
 		}
 		if (!strpos($template, '/')) {
-			$template = Inflector::tableize($Model->alias) . '/' . $template;
+			$template = $Model->alias . '/' . $template;
 		}
 		$fields = $this->settings[$Model->alias]['fields'];
 		$defaultData = $Model->find('first', array('conditions' => array($Model->alias . '.' . $Model->primaryKey => $Model->id)));
@@ -597,6 +599,7 @@ class UserAccountBehavior extends ModelBehavior {
 		$defaultData[$Model->alias]['emailType'] = 'normal';
 		$data = Set::merge($defaultData, $data);
 		$to = $data[$Model->alias]['to'];
+		$from = $data[$Model->alias]['from'];
 		$emailType = $data[$Model->alias]['emailType'];
 		$MiEmail = ClassRegistry::init('MiEmail');
 		if (!$autoSend) {
@@ -606,7 +609,8 @@ class UserAccountBehavior extends ModelBehavior {
 		$MiEmail->send(array(
 			'from_user_id' => $data[$Model->alias]['from_user_id'],
 			'to_user_id' => $Model->id,
-			'to' => $Model->display() . " <{$to}>",
+			'from' => $from,
+			'to' =>  array($to => $Model->display()),
 			'template' => $template,
 			'data' => $data,
 			'subject' => $subject,
