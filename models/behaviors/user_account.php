@@ -68,8 +68,8 @@ class UserAccountBehavior extends ModelBehavior {
  */
 	var $_defaultSettings = array(
 		'sendEmails' => array(
-			'welcome' => true,
-			'accountChange' => true
+			'welcome' => array('subject' => __('Bienvenido. Confirma tu cuenta')),
+			'accountChange' => array('subject' => __('Tu cuenta ha sido modificada'))
 		),
 		'fields' => array(
 			'current' => 'current_password',
@@ -134,24 +134,34 @@ class UserAccountBehavior extends ModelBehavior {
 			if ($this->settings[$Model->alias]['sendEmails']['welcome']) {
 				$data[$Model->alias]['emailType'] = 'private';
 				$data[$Model->alias]['token'] = $Model->token();
-				if ($this->settings[$Model->alias]['sendEmails']['welcome'] == 'noAutoSend') {
+				if ($this->settings[$Model->alias]['sendEmails']['welcome'] === 'noAutoSend') {
 					$autoSend = false;	
 				} else {
 					$autoSend = true;
 				}
+				if (!empty($this->settings[$Model->alias]['sendEmails']['subject'])) {
+					$subject = $this->settings[$Model->alias]['sendEmails']['welcome']['subject'];
+				} else {
+					$subject = $this-_defaultSettings['sendEmails']['welcome']['subject'];
+				}
 				$data[$Model->alias]['from'] = Configure::read('Site.email');
-				$this->sendMail($Model, 'welcome', $data, __('Bienvenido. Confirma tu cuenta', true), $autoSend);
+				$this->sendMail($Model, 'welcome', $data, $subject, true), $autoSend);
 			}
 			return;
 		}
 		if (!$this->settings[$Model->alias]['sendEmails']['accountChange']) {
 			return;
 		}
+		if (!empty($this->settings[$Model->alias]['sendEmails']['accountChange']['subject'])) {
+			$subject = $this->settings[$Model->alias]['sendEmails']['accountChange']['subject'];
+		} else {
+			$subject = $this->_defaultSettings['sendEmails']['accountChange']['subject'];
+		}
 		extract($this->settings[$Model->alias]);
 		if (!empty($__passwordChanged)) {
 			$data[$Model->alias]['change'] = 'password';
 			$data[$Model->alias]['emailType'] = 'private';
-			$this->sendMail($Model, 'account_change', $data, __('Tu cuenta ha sido modificada', true));
+			$this->sendMail($Model, 'account_change', $data, $subject);
 			unset ($this->settings[$Model->alias]['__passwordChanged']);
 		}
 		if (!empty($__emailChanged)) {
@@ -159,14 +169,14 @@ class UserAccountBehavior extends ModelBehavior {
 			$data[$Model->alias]['change'] = 'email';
 			$data[$Model->alias]['oldValue'] = $__emailChanged;
 			$data[$Model->alias]['emailType'] = 'private';
-			$this->sendMail($Model, 'account_change', $data, __('Tu cuenta ha sido modificada', true));
+			$this->sendMail($Model, 'account_change', $data, $subject);
 			unset ($this->settings[$Model->alias]['__emailChanged']);
 		}
 		if (!empty($__usernameChanged)) {
 			$data[$Model->alias]['change'] = 'username';
 			$data[$Model->alias]['oldValue'] = $__usernameChanged;
 			$data[$Model->alias]['emailType'] = 'private';
-			$this->sendMail($Model, 'account_change', $data, __('Tu cuenta ha sido modificada', true));
+			$this->sendMail($Model, 'account_change', $data, $subject);
 			unset ($this->settings[$Model->alias]['__usernameChanged']);
 		}
 	}
