@@ -139,11 +139,12 @@ class UserAccountBehavior extends ModelBehavior {
 				} else {
 					$autoSend = true;
 				}
-				if (!empty($this->settings[$Model->alias]['sendEmails']['subject'])) {
+				if (!empty($this->settings[$Model->alias]['sendEmails']['welcome']['subject'])) {
 					$subject = $this->settings[$Model->alias]['sendEmails']['welcome']['subject'];
 				} else {
 					$subject = $this->_defaultSettings['sendEmails']['welcome']['subject'];
 				}
+				debug($subject); die;
 				$data[$Model->alias]['from'] = Configure::read('Site.email');
 				$this->sendMail($Model, 'welcome', $data, $subject, $autoSend);
 			}
