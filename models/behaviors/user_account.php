@@ -68,8 +68,8 @@ class UserAccountBehavior extends ModelBehavior {
  */
 	var $_defaultSettings = array(
 		'sendEmails' => array(
-			'welcome' => array('subject' => __('Bienvenido. Confirma tu cuenta')),
-			'accountChange' => array('subject' => __('Tu cuenta ha sido modificada'))
+			'welcome' => array('subject' => 'Bienvenido. Confirma tu cuenta'),
+			'accountChange' => array('subject' => 'Tu cuenta ha sido modificada')
 		),
 		'fields' => array(
 			'current' => 'current_password',
