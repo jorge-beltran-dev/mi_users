@@ -144,7 +144,7 @@ class UserAccountBehavior extends ModelBehavior {
 				} else {
 					$subject = $this->_defaultSettings['sendEmails']['welcome']['subject'];
 				}
-				debug($subject); die;
+
 				$data[$Model->alias]['from'] = Configure::read('Site.email');
 				$this->sendMail($Model, 'welcome', $data, $subject, $autoSend);
 			}
