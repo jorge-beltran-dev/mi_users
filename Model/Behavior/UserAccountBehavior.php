@@ -105,7 +105,7 @@ class UserAccountBehavior extends ModelBehavior {
  * @return void
  * @access public
  */
-	function setup(&$Model, $config = array()) {
+	function setup(Model $Model, $config = array()) {
 		$this->settings[$Model->alias] = Set::merge($this->_defaultSettings, $config);
 	}
 
@@ -129,7 +129,7 @@ class UserAccountBehavior extends ModelBehavior {
  * @return void
  * @access public
  */
-	function afterSave(&$Model, $created) {
+	function afterSave(Model $Model, $created) {
 		if ($created) {
 			if ($this->settings[$Model->alias]['sendEmails']['welcome']) {
 				$data[$Model->alias]['emailType'] = 'private';
@@ -190,7 +190,7 @@ class UserAccountBehavior extends ModelBehavior {
  * @access public
  * @return void
  */
-	function beforeSave(&$Model) {
+	function beforeSave(Model $Model) {
 		extract($this->settings[$Model->alias]['fields']);
 		if ($Model->id) {
 			if (isset($Model->data[$Model->alias][$password]) &&
@@ -219,7 +219,7 @@ class UserAccountBehavior extends ModelBehavior {
  * @return void
  * @access public
  */
-	function beforeValidate(&$Model) {
+	function beforeValidate(Model $Model) {
 		$this->_setupValidation($Model);
 		extract($this->settings[$Model->alias]);
 		if (!empty($Model->data[$Model->alias]['generate'])) {
@@ -709,7 +709,7 @@ class UserAccountBehavior extends ModelBehavior {
 	function validateConfirmMatch(&$Model, $data, $compare) {
 		$key = key($data);
 		$value = $data[$key];
-		$compare = $Model->data[$Model->alias][$compare[0]];
+		$compare = $Model->data[$Model->alias][$this->settings[$Model->alias]['fields']['password']];
 		return ($value === $compare);
 	}
 
@@ -772,13 +772,13 @@ class UserAccountBehavior extends ModelBehavior {
  * @access public
  */
 	function validatePasswordDifferent(&$Model, $data, $compare) {
-		if (!isset($Model->data[$Model->alias][$compare[1]])) {
+		if (!isset($Model->data[$Model->alias][$this->settings[$Model->alias]['fields']['current']])) {
 			return true;
 		}
 		$key = key($data);
 		$value = $data[$key];
-		$password = $Model->data[$Model->alias][$compare[0]];
-		$current = $Model->data[$Model->alias][$compare[1]];
+		$password = $Model->data[$Model->alias][$this->settings[$Model->alias]['fields']['password']];
+		$current = $Model->data[$Model->alias][$this->settings[$Model->alias]['fields']['current']];
 		return ($password != $current);
 	}
 
@@ -796,7 +796,7 @@ class UserAccountBehavior extends ModelBehavior {
 	function validatePasswordLength(&$Model, $data, $compare) {
 		$key = key($data);
 		$value = $data[$key];
-		$compare = $Model->data[$Model->alias][$compare[0]];
+		$compare = $Model->data[$Model->alias][$this->settings[$Model->alias]['fields']['password']];
 		$length = strlen($compare);
 		if ($length < $this->settings[$Model->alias]['passwordPolicies'][$this->settings[$Model->alias]['passwordPolicy']]['length']) {
 			return false;
@@ -818,7 +818,7 @@ class UserAccountBehavior extends ModelBehavior {
 	function validatePasswordNotEmpty(&$Model, $data, $compare) {
 		$key = key($data);
 		$value = $data[$key];
-		$compare = $Model->data[$Model->alias][$compare[0]];
+		$compare = $Model->data[$Model->alias][$this->settings[$Model->alias]['fields']['password']];
 		return (preg_match('/[^\\s]/', $compare));
 	}
 

@@ -92,7 +92,7 @@ class RememberMeComponent extends Component {
  * @return void
  * @access public
  */
-	function initialize(&$C) {
+	function initialize(Controller $C) {
 		if ((Configure::read() && !$this->_setupCheck($C)) || !empty($C->params['requested'])) {
 			$this->enabled = false;
 			return;
@@ -117,7 +117,7 @@ class RememberMeComponent extends Component {
  * @return void
  * @access public
  */
-	function beforeRedirect(&$C, $url, $status, $exit) {
+	function beforeRedirect(Controller $C, $url, $status = null, $exit = true) {
 		if (!isset($this->Controller)) {
 			$this->initialize($C);
 		}
@@ -173,7 +173,7 @@ class RememberMeComponent extends Component {
  * @return void
  * @access public
  */
-	function log($message) {
+	function log($message, $type = 3) {
 		if (!$this->settings['debug']) {
 			return;
 		}
